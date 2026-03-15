@@ -1,0 +1,85 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Candles from "../components/Candles.astro";
+import TimesCard from "../components/TimesCard.astro";
+import { CITIES } from "../lib/cities";
+
+const initialCityId = "buenos_aires";
+const cityOptions = CITIES.map((c) => ({
+  id: c.id,
+  label: `${c.label}${c.countryHint ? ` (${c.countryHint})` : ""}`
+}));
+---
+
+<BaseLayout title="SHABBES" description="Shabbat times, softly.">
+  <main
+    class="relative mx-auto flex min-h-dvh max-w-3xl flex-col px-5 py-10 sm:px-6 sm:py-14"
+  >
+    <div
+      class="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(900px_400px_at_50%_0%,rgba(242,166,120,0.22),transparent_60%),radial-gradient(700px_350px_at_20%_20%,rgba(255,230,200,0.55),transparent_55%)]"
+    >
+    </div>
+
+    <header class="mb-8 flex flex-col items-center text-center">
+      <Candles class="mb-3 h-24 w-auto" />
+      <h1 class="text-balance text-5xl font-semibold tracking-tight text-cocoa-600 sm:text-6xl">
+        SHABBES
+      </h1>
+      <p class="text-balance mt-3 max-w-prose text-sm text-cocoa-500 sm:text-base">
+        shabbat times, softly
+      </p>
+    </header>
+
+    <TimesCard cityOptions={cityOptions} initialCityId={initialCityId} />
+
+    <footer class="mt-8 text-center text-xs text-cocoa-400">
+      Datos en tiempo real vía Hebcal (Shabbat API).
+    </footer>
+  </main>
+
+  <script>
+    import { getCityById } from "../lib/cities";
+    import { fetchShabbatTimes } from "../lib/hebcal";
+
+    const citySelect = document.getElementById("citySelect");
+    const dateLabel = document.getElementById("dateLabel");
+    const startsLabel = document.getElementById("startsLabel");
+    const endsLabel = document.getElementById("endsLabel");
+    const locationLabel = document.getElementById("locationLabel");
+    const statusLabel = document.getElementById("statusLabel");
+
+    function setStatus(text) {
+      if (statusLabel) statusLabel.textContent = text;
+    }
+
+    function setValues({ locationLabel: loc, isoDate, startsAtLabel, endsAtLabel }) {
+      if (locationLabel) locationLabel.textContent = loc;
+      if (dateLabel) dateLabel.textContent = `Fecha: ${isoDate}`;
+      if (startsLabel) startsLabel.textContent = startsAtLabel;
+      if (endsLabel) endsLabel.textContent = endsAtLabel;
+    }
+
+    async function load(cityId) {
+      const city = getCityById(cityId);
+      setStatus("Cargando…");
+      try {
+        const times = await fetchShabbatTimes(city);
+        setValues(times);
+        setStatus("Actualizado con datos reales.");
+      } catch (err) {
+        console.error(err);
+        setStatus("No pude cargar la API. Probá de nuevo en unos segundos.");
+      }
+    }
+
+    if (citySelect) {
+      citySelect.addEventListener("change", (e) => {
+        const value = e.target && "value" in e.target ? e.target.value : "buenos_aires";
+        load(String(value));
+      });
+      load(String(citySelect.value || "buenos_aires"));
+    } else {
+      load("buenos_aires");
+    }
+  </script>
+</BaseLayout>

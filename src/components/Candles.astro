@@ -1,0 +1,143 @@
+---
+type Props = {
+  class?: string;
+};
+
+const { class: className = "" } = Astro.props;
+---
+
+<svg
+  class={className}
+  viewBox="0 0 240 120"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  role="img"
+  aria-label="Cute shabbat candles"
+>
+  <defs>
+    <linearGradient id="wax" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFF3E3" />
+      <stop offset="1" stop-color="#FFE6C8" />
+    </linearGradient>
+    <linearGradient id="flame" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE0CC" />
+      <stop offset="1" stop-color="#F2A678" />
+    </linearGradient>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="b" />
+      <feColorMatrix
+        in="b"
+        type="matrix"
+        values="1 0 0 0 0  0 0.85 0 0 0  0 0 0.65 0 0  0 0 0 0.30 0"
+        result="c"
+      />
+      <feMerge>
+        <feMergeNode in="c" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- warm background blob -->
+  <path
+    d="M38 88c-9-18 1-46 25-60 21-12 48-7 64 8 9-16 28-27 49-24 31 4 54 33 45 62-6 20-25 32-48 34-35 2-65-7-86-6-17 1-35 3-49-14z"
+    fill="#FFF3E3"
+    opacity="0.9"
+  />
+
+  <!-- left candle -->
+  <g transform="translate(52 20)">
+    <ellipse cx="40" cy="84" rx="44" ry="10" fill="#E6B39A" opacity="0.35" />
+    <path
+      d="M15 88V34c0-11 9-20 20-20h10c11 0 20 9 20 20v54c0 4-3 7-7 7H22c-4 0-7-3-7-7z"
+      fill="url(#wax)"
+      stroke="#D79A80"
+      stroke-width="2"
+    />
+    <path
+      d="M35 14c3 5 2 10-1 13"
+      stroke="#C87A5A"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+    <g filter="url(#softGlow)" class="flame-float">
+      <path
+        d="M40 6c7 9 7 16 3 21-4 6-13 6-17 0-4-5-4-12 3-21 3-4 6-6 11 0z"
+        fill="url(#flame)"
+        stroke="#C87A5A"
+        stroke-width="2"
+      />
+      <path
+        d="M40 11c3 4 3 8 1 11-2 3-7 3-9 0-2-3-2-7 1-11 2-2 4-3 7 0z"
+        fill="#FFFBF5"
+        opacity="0.75"
+      />
+    </g>
+    <!-- tiny face -->
+    <path
+      d="M33 54c2 2 4 2 6 0"
+      stroke="#8A6458"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+    <path
+      d="M48 54c2 2 4 2 6 0"
+      stroke="#8A6458"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+    <path
+      d="M44 63c2 2 6 2 8 0"
+      stroke="#8A6458"
+      stroke-width="2"
+      stroke-linecap="round"
+      opacity="0.8"
+    />
+  </g>
+
+  <!-- right candle -->
+  <g transform="translate(128 28)">
+    <ellipse cx="40" cy="76" rx="44" ry="10" fill="#E6B39A" opacity="0.30" />
+    <path
+      d="M17 80V32c0-10 8-18 18-18h10c10 0 18 8 18 18v48c0 4-3 7-7 7H24c-4 0-7-3-7-7z"
+      fill="url(#wax)"
+      stroke="#D79A80"
+      stroke-width="2"
+    />
+    <path
+      d="M40 14c2 4 2 8 0 11"
+      stroke="#C87A5A"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+    <g filter="url(#softGlow)" class="flame-float">
+      <path
+        d="M40 6c6 8 6 14 2 19-4 5-12 5-16 0-4-5-4-11 2-19 3-4 6-5 10 0z"
+        fill="url(#flame)"
+        stroke="#C87A5A"
+        stroke-width="2"
+      />
+    </g>
+    <!-- tiny face -->
+    <path
+      d="M30 50c2 2 4 2 6 0"
+      stroke="#8A6458"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+    <path
+      d="M48 50c2 2 4 2 6 0"
+      stroke="#8A6458"
+      stroke-width="2"
+      stroke-linecap="round"
+    />
+    <path
+      d="M39 59c2 2 5 2 7 0"
+      stroke="#8A6458"
+      stroke-width="2"
+      stroke-linecap="round"
+      opacity="0.8"
+    />
+  </g>
+</svg>
+

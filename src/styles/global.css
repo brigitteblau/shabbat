@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  body {
+    @apply bg-cream-50 text-cocoa-600 antialiased;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+      Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .flame-float {
+      animation: flame-float 2.8s ease-in-out infinite;
+      transform-origin: 50% 85%;
+    }
+
+    @keyframes flame-float {
+      0%,
+      100% {
+        transform: translateY(0) rotate(-1deg);
+      }
+      50% {
+        transform: translateY(-1.5px) rotate(1deg);
+      }
+    }
+  }
+}
+
