@@ -1,22 +1,118 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/tailwind.css";
 
 @layer base {
   :root {
     color-scheme: light;
+
+    /* SHABBES tokens (identidad) */
+    --sh-bg: #fffbf5;
+    --sh-surface: rgba(255, 255, 255, 0.72);
+    --sh-surface-strong: rgba(255, 255, 255, 0.86);
+    --sh-border: #ffe6c8;
+
+    --sh-ink: #53372e;
+    --sh-muted: #6b4b3e;
+    --sh-soft: #8a6458;
+
+    --sh-accent: #c87a5a;
+    --sh-accent-2: #f2a678;
+
+    --sh-radius-blob: 28px;
+    --sh-shadow-soft: 0 10px 30px rgba(107, 75, 62, 0.12);
+    --sh-shadow-softer: 0 6px 16px rgba(107, 75, 62, 0.1);
+  }
+
+  /* View Transition API (si está disponible): suave al cambiar ciudad */
+  #dateLabel {
+    view-transition-name: sh-date;
+  }
+  #startsLabel {
+    view-transition-name: sh-starts;
+  }
+  #endsLabel {
+    view-transition-name: sh-ends;
+  }
+  #locationLabel {
+    view-transition-name: sh-loc;
+  }
+  #parashaWrap {
+    view-transition-name: sh-parasha;
+  }
+
+  ::view-transition-old(sh-date),
+  ::view-transition-old(sh-starts),
+  ::view-transition-old(sh-ends),
+  ::view-transition-old(sh-loc),
+  ::view-transition-old(sh-parasha) {
+    animation: sh-fade 220ms ease both;
+  }
+
+  ::view-transition-new(sh-date),
+  ::view-transition-new(sh-starts),
+  ::view-transition-new(sh-ends),
+  ::view-transition-new(sh-loc),
+  ::view-transition-new(sh-parasha) {
+    animation: sh-rise 320ms ease both;
+  }
+
+  @keyframes sh-fade {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes sh-rise {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   body {
-    @apply bg-cream-50 text-cocoa-600 antialiased;
+    background: var(--sh-bg);
+    color: var(--sh-ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
       Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  }
+
+  ::selection {
+    background: rgba(242, 166, 120, 0.35);
+  }
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+      "Liberation Mono", "Courier New", monospace;
+    font-size: 0.95em;
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 520ms ease, transform 520ms ease;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -35,5 +131,12 @@
       }
     }
   }
-}
 
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      transition: none;
+      transform: none;
+      opacity: 1;
+    }
+  }
+}

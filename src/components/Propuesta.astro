@@ -1,0 +1,50 @@
+---
+type Props = {
+  id?: string;
+};
+
+const { id = "propuesta" } = Astro.props;
+---
+
+<section id={id} class="scroll-mt-24">
+  <div
+    class="rounded-[var(--sh-radius-blob)] border border-[color:var(--sh-border)] bg-[color:var(--sh-surface)] shadow-[var(--sh-shadow-soft)] backdrop-blur-sm"
+  >
+    <div class="p-6 sm:p-8">
+      <h2 class="text-lg font-semibold tracking-tight text-[color:var(--sh-ink)]">
+        La propuesta
+      </h2>
+      <p class="mt-2 text-sm text-[color:var(--sh-muted)] sm:text-base">
+        Una página simple para llegar rápido a lo importante: cuándo empieza y cuándo termina
+        Shabbat, con datos reales y una estética cálida.
+      </p>
+
+      <div class="mt-6 grid gap-3 sm:grid-cols-3">
+        <div class="rounded-2xl bg-white/60 p-4 transition will-change-transform hover:-translate-y-0.5">
+          <p class="text-xs font-medium uppercase tracking-wide text-[color:var(--sh-soft)]">
+            Real
+          </p>
+          <p class="mt-1 text-sm font-medium text-[color:var(--sh-ink)]">
+            Horarios vía Hebcal (Shabbat API).
+          </p>
+        </div>
+        <div class="rounded-2xl bg-white/60 p-4 transition will-change-transform hover:-translate-y-0.5">
+          <p class="text-xs font-medium uppercase tracking-wide text-[color:var(--sh-soft)]">
+            Suave
+          </p>
+          <p class="mt-1 text-sm font-medium text-[color:var(--sh-ink)]">
+            Tipografía limpia, sombras blandas, cero ruido.
+          </p>
+        </div>
+        <div class="rounded-2xl bg-white/60 p-4 transition will-change-transform hover:-translate-y-0.5">
+          <p class="text-xs font-medium uppercase tracking-wide text-[color:var(--sh-soft)]">
+            Útil
+          </p>
+          <p class="mt-1 text-sm font-medium text-[color:var(--sh-ink)]">
+            Ciudad + fecha + (cuando esté disponible) la parashá.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

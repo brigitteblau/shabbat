@@ -16,6 +16,7 @@ type HebcalResponse = {
 export type ShabbatTimes = {
   locationLabel: string;
   isoDate: string;
+  parashaTitle?: string;
   startsAtISO: string;
   endsAtISO: string;
   startsAtLabel: string;
@@ -69,6 +70,13 @@ export async function fetchShabbatTimes(city: City): Promise<ShabbatTimes> {
 
   const candles = items.find((i) => i.category === "candles" && i.date);
   const havdalah = items.find((i) => i.category === "havdalah" && i.date);
+  const parashaItem = items.find(
+    (i) =>
+      (i.category === "parashat" ||
+        i.category === "parashah" ||
+        i.category === "parsha") &&
+      i.title
+  );
 
   if (!candles?.date || !havdalah?.date) {
     throw new Error("Hebcal response missing candles/havdalah times");
@@ -85,6 +93,7 @@ export async function fetchShabbatTimes(city: City): Promise<ShabbatTimes> {
   return {
     locationLabel,
     isoDate,
+    parashaTitle: parashaItem?.title?.trim() || undefined,
     startsAtISO: candles.date,
     endsAtISO: havdalah.date,
     startsAtLabel: formatTime(candles.date, timeZone, locale),
