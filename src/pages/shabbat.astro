@@ -1,0 +1,12 @@
+---
+import ShabbatView from "../components/ShabbatView.jsx";
+
+const city = Astro.url.searchParams.get("city") || "";
+const lang = Astro.url.searchParams.get("lang") || "en";
+---
+
+<html lang="en">
+  <body>
+    <ShabbatView city={city} lang={lang} client:load />
+  </body>
+</html>

@@ -1,0 +1,151 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+  background: #000;
+}
+
+.intro-page {
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.intro-center {
+  width: 100%;
+  max-width: 900px;
+  text-align: center;
+}
+
+/* ── Title ── */
+.intro-title {
+  margin: 0 0 48px;
+  font-size: clamp(4rem, 12vw, 8rem);
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  line-height: 0.95;
+}
+
+.typing {
+  width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-left: auto;
+  margin-right: auto;
+  border-right: 3px solid #fff;
+  animation:
+    typing 0.9s steps(7, end) forwards,
+    blink 0.7s step-end infinite;
+}
+
+/* ── Label ── */
+.intro-text {
+  margin: 28px 0 18px;
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* ── Buttons ── */
+.option-group {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.option-button {
+  background: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+  padding: 14px 22px;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: "Roboto", sans-serif;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.option-button:hover {
+  background: #fff;
+  color: #000;
+}
+
+.option-button.active {
+  background: #fff;
+  color: #000;
+}
+
+/* ── Enter button ── */
+.enter-button {
+  margin-top: 36px;
+  background: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+  padding: 14px 48px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: "Roboto", sans-serif;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: all 0.18s ease;
+}
+
+.enter-button:hover {
+  background: #fff;
+  color: #000;
+  transform: scale(1.04);
+}
+
+/* ── Boom animation ── */
+.boom {
+  opacity: 0;
+  transform: scale(0.7);
+  animation: boomIn 0.45s cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
+}
+
+.delay-1 { animation-delay: 0.85s; }
+.delay-2 { animation-delay: 1s; }
+
+/* ── Keyframes ── */
+@keyframes typing {
+  from { width: 0; }
+  to   { width: 7ch; }
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+@keyframes boomIn {
+  from { opacity: 0; transform: scale(0.7); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ── Mobile ── */
+@media (max-width: 700px) {
+  .option-group {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .option-button {
+    width: min(280px, 100%);
+  }
+
+  .intro-title {
+    margin-bottom: 36px;
+  }
+}

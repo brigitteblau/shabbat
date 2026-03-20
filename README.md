@@ -1,24 +1,43 @@
-# SHABBES
+# Astro Starter Kit: Minimal
 
-Una web en Astro que muestra horarios reales de Shabbat con una estética cálida, minimalista y “cute”.
-
-## Correr en local
-
-```bash
-npm install
-npm run dev
+```sh
+npm create astro@latest -- --template minimal
 ```
 
-Luego abrí el URL que te imprime Astro (por defecto `http://localhost:4321`).
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
-## Archivos clave
+## 🚀 Project Structure
 
-- `astro.config.mjs`: configuración de Astro + integración de Tailwind.
-- `tailwind.config.mjs`: paleta cálida (cream / soft orange / terracotta) + sombras suaves.
-- `src/styles/global.css`: Tailwind base + un keyframe sutil para la llama (respeta `prefers-reduced-motion`).
-- `src/pages/index.astro`: única página (hero + card de horarios + nota). Incluye el script que llama a Hebcal y actualiza la UI.
-- `src/components/Candles.astro`: SVG hecho a mano de velitas cute/minimal (sin imágenes externas).
-- `src/components/TimesCard.astro`: card con selector de ciudad + placeholders para los horarios.
-- `src/lib/cities.ts`: ciudades disponibles (Buenos Aires / Jerusalem / New York) con coordenadas y TZ.
-- `src/lib/hebcal.ts`: arma la URL de Hebcal y parsea la respuesta (candles + havdalah).
+Inside of your Astro project, you'll see the following folders and files:
 
+```text
+/
+├── public/
+├── src/
+│   └── pages/
+│       └── index.astro
+└── package.json
+```
+
+Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+
+There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+
+Any static assets, like images, can be placed in the `public/` directory.
+
+## 🧞 Commands
+
+All commands are run from the root of the project, from a terminal:
+
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Installs dependencies                            |
+| `npm run dev`             | Starts local dev server at `localhost:4321`      |
+| `npm run build`           | Build your production site to `./dist/`          |
+| `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI                     |
+
+## 👀 Want to learn more?
+
+Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

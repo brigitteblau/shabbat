@@ -1,0 +1,121 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #000;
+  color: #fff;
+  font-family: "Roboto", sans-serif;
+}
+
+.shabbat-page {
+  min-height: 100vh;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.shabbat-container {
+  width: 100%;
+  max-width: 1100px;
+}
+
+.shabbat-kicker {
+  margin: 0 0 12px;
+  text-align: center;
+  font-size: 0.95rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.shabbat-title {
+  margin: 0 0 36px;
+  text-align: center;
+  font-size: clamp(2.6rem, 8vw, 5.5rem);
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  line-height: 0.95;
+}
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.shabbat-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+  background: #000;
+}
+
+.shabbat-table thead th {
+  text-align: left;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.shabbat-table tbody td {
+  padding: 22px 20px;
+  font-size: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.shabbat-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.shabbat-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.loading-text {
+  font-size: 1.05rem;
+  opacity: 0.8;
+}
+
+.page-enter {
+  animation: pageEnter 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: scale(1.03);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+@media (max-width: 720px) {
+  .shabbat-page {
+    align-items: flex-start;
+    padding-top: 48px;
+  }
+
+  .shabbat-title {
+    margin-bottom: 24px;
+  }
+
+  .shabbat-table tbody td,
+  .shabbat-table thead th {
+    padding: 16px 14px;
+  }
+}
