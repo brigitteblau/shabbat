@@ -1,9 +1,7 @@
 # SHABBES
-
 Una web en Astro que muestra horarios reales de Shabbat con una estética cálida, minimalista y “cute”.
 
 ## Correr en local
-
 ```bash
 npm install
 npm run dev
@@ -12,7 +10,6 @@ npm run dev
 Luego abrí el URL que te imprime Astro (por defecto `http://localhost:4321`).
 
 ## Archivos clave
-
 - `astro.config.mjs`: configuración de Astro + integración de Tailwind.
 - `tailwind.config.mjs`: paleta cálida (cream / soft orange / terracotta) + sombras suaves.
 - `src/styles/global.css`: Tailwind base + un keyframe sutil para la llama (respeta `prefers-reduced-motion`).
@@ -21,11 +18,10 @@ Luego abrí el URL que te imprime Astro (por defecto `http://localhost:4321`).
 - `src/components/TimesCard.astro`: card con selector de ciudad + placeholders para los horarios.
 - `src/lib/cities.ts`: ciudades disponibles (Buenos Aires / Jerusalem / New York) con coordenadas y TZ.
 - `src/lib/hebcal.ts`: arma la URL de Hebcal y parsea la respuesta (candles + havdalah).
-
+  
 ## Qué cumple de la consigna extra?
-
-✅ componentes reutilizables
-✅ animaciones
-✅ librerías CSS -> use tailwind css
-✅ fetch de API -> para obtener los horarios de shabbat
-✅ deploy -> con vercel
+✅ Componentes reutilizables  
+✅ Animaciones  
+✅ Librerías CSS → usé Tailwind CSS  
+✅ Fetch de API → para obtener los horarios de Shabbat  
+✅ Deploy → con Vercel
