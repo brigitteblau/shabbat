@@ -22,3 +22,10 @@ Luego abrí el URL que te imprime Astro (por defecto `http://localhost:4321`).
 - `src/lib/cities.ts`: ciudades disponibles (Buenos Aires / Jerusalem / New York) con coordenadas y TZ.
 - `src/lib/hebcal.ts`: arma la URL de Hebcal y parsea la respuesta (candles + havdalah).
 
+## Qué cumple de la consigna extra?
+
+✅ componentes reutilizables
+✅ animaciones
+✅ librerías CSS -> use tailwind css
+✅ fetch de API -> para obtener los horarios de shabbat
+✅ deploy -> con vercel
