@@ -58,7 +58,7 @@ const BASE: Record<string, ParashaEntry> = {
   },
   Vayeshev: {
     teaching:
-      "Yosef sueña en grande justo mientras sus hermanos lo tiran a un pozo. Un mal momento no cancela un buen sueño.",
+      "Yosef sueña en grande, y justamente por esos sueños sus hermanos lo tiran a un pozo. Un mal momento no cancela un buen sueño.",
     question: "¿Qué sueño tuyo sigue en pie aunque el presente todavía no lo confirme?"
   },
   Miketz: {
@@ -174,7 +174,7 @@ const BASE: Record<string, ParashaEntry> = {
   },
   Behar: {
     teaching:
-      "Cada cincuenta años la tierra descansa y las deudas se perdonan. Hasta el sistema económico más antiguo entendía que todos necesitamos un reinicio.",
+      "Cada siete años la tierra descansa (Shemitá), y en el año cincuenta, el Yovel, las tierras vuelven a sus dueños originales y las personas esclavizadas quedan libres. Hasta el sistema más antiguo entendía que todos necesitamos un reinicio.",
     question: "¿Qué 'deuda' emocional te vendría bien perdonar o soltar?"
   },
   Bechukotai: {
