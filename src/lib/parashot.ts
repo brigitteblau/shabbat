@@ -1,0 +1,345 @@
+type ParashaEntry = {
+  teaching: string;
+  question: string;
+};
+
+function normalizeKey(name: string): string {
+  return name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/['’]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+const BASE: Record<string, ParashaEntry> = {
+  Bereshit: {
+    teaching:
+      "Dios crea el mundo entero con palabras, y nosotros seguimos creando realidad con las nuestras cada día.",
+    question: "¿Qué estás creando esta semana con tus palabras y tus actos?"
+  },
+  Noach: {
+    teaching:
+      "Noaj construye el arca durante años sin haber visto nunca la lluvia, sosteniendo la fe en algo que todavía no existía. El arcoíris al final es la promesa de que después de la tormenta siempre hay algo nuevo.",
+    question:
+      "¿Qué 'arca' estás construyendo hoy para algo que todavía no ves, pero en lo que confiás?"
+  },
+  "Lech Lecha": {
+    teaching:
+      "Dios le dice a Avram 'andate de tu tierra' sin decirle a dónde va. Es el primer gran viaje de fe de la Torá, y empieza sin garantías.",
+    question: "¿Qué lugar conocido tendrías que dejar para poder crecer?"
+  },
+  Vayera: {
+    teaching:
+      "Avraham corre a recibir a tres desconocidos en pleno calor del día: la hospitalidad como acto sagrado, no como trámite.",
+    question: "¿A quién podés recibir esta semana con los brazos bien abiertos?"
+  },
+  "Chayei Sara": {
+    teaching:
+      "Aunque el nombre significa 'la vida de Sara', la parashá arranca con su muerte: el legado de una persona sigue vivo mucho después de que se va.",
+    question: "¿Qué legado te gustaría dejar en la gente que te rodea?"
+  },
+  Toldot: {
+    teaching:
+      "Yitzchak vuelve a cavar los mismos pozos que había cavado su padre Avraham. A veces honrar el pasado es simplemente retomar lo que otros ya empezaron.",
+    question: "¿Qué 'pozo' de tu historia familiar podrías volver a abrir?"
+  },
+  Vayetzei: {
+    teaching:
+      "Yaakov sueña con una escalera que conecta el cielo y la tierra justo cuando está solo, a la intemperie y sin nada. Lo más elevado a veces aparece en los momentos más vulnerables.",
+    question:
+      "¿En qué momento difícil encontraste, sin buscarla, una señal de que no estabas solo?"
+  },
+  Vayishlach: {
+    teaching:
+      "Yaakov lucha toda la noche con un ser desconocido y sale rengueando, pero con un nombre nuevo: Israel. Las luchas que no evitamos son las que más nos transforman.",
+    question: "¿Qué lucha estás evitando que en realidad podría darte un nombre nuevo?"
+  },
+  Vayeshev: {
+    teaching:
+      "Yosef sueña en grande justo mientras sus hermanos lo tiran a un pozo. Un mal momento no cancela un buen sueño.",
+    question: "¿Qué sueño tuyo sigue en pie aunque el presente todavía no lo confirme?"
+  },
+  Miketz: {
+    teaching:
+      "Yosef pasa de la cárcel al palacio en un solo capítulo, pero nunca deja de ver algo más grande detrás de cada giro de su historia.",
+    question: "¿Podés ver algo bueno escondido en una situación que hoy parece solo un obstáculo?"
+  },
+  Vayigash: {
+    teaching:
+      "Yosef llora tan fuerte al revelarse ante sus hermanos que 'lo oyeron en la casa de Faraón'. El perdón de verdad también hace ruido.",
+    question: "¿Hay alguna reconciliación pendiente que estás posponiendo?"
+  },
+  Vayechi: {
+    teaching:
+      "Yaakov bendice a cada uno de sus hijos según quién es cada uno, no según un mismo molde. El buen liderazgo ve a cada persona en su propia luz.",
+    question: "¿A quién podrías bendecir hoy reconociendo lo que lo hace único?"
+  },
+  Shemot: {
+    teaching:
+      "La zarza arde pero no se consume. A veces lo que más te apasiona no te agota: te sostiene.",
+    question: "¿Qué 'zarza' en tu vida arde sin consumirte, y qué te está diciendo?"
+  },
+  Vaera: {
+    teaching:
+      "Dios le repite a Moshe las mismas promesas varias veces porque el pueblo, agotado, 'no escuchaba por la angustia de espíritu'. A veces hace falta paciencia, no un mensaje nuevo.",
+    question: "¿Necesitás repetirte algo que ya sabés, hasta poder escucharlo de verdad?"
+  },
+  Bo: {
+    teaching:
+      "Es el primer mandamiento que recibe el pueblo sobre el tiempo: 'este mes será para ustedes el primero'. La libertad empieza por decidir cómo contamos nuestros propios días.",
+    question: "¿Qué 'mes uno' te gustaría empezar en tu propia vida ahora mismo?"
+  },
+  Beshalach: {
+    teaching:
+      "El pueblo canta la Shirat HaYam apenas cruza el mar, pero unos versos después ya se queja por el agua. La fe y la duda conviven en la misma semana, y está bien que así sea.",
+    question:
+      "¿Podés celebrar un logro reciente sin que la próxima preocupación lo tape del todo?"
+  },
+  Yitro: {
+    teaching:
+      "Es un suegro, Yitró, quien le enseña a Moshe a delegar antes de que reciba la Torá. Hasta el líder más grande necesita ayuda de afuera para no quemarse.",
+    question: "¿Qué tarea podrías delegar para sostenerte mejor en lo que de verdad importa?"
+  },
+  Mishpatim: {
+    teaching:
+      "Después de la revelación en el Sinaí, la Torá pasa directo a leyes sobre bueyes y préstamos. Lo espiritual se mide en cómo tratamos lo cotidiano.",
+    question: "¿Cómo se nota tu ética en las cosas chiquitas del día a día?"
+  },
+  Terumah: {
+    teaching:
+      "Dios pide que las ofrendas para el Mishkán salgan 'de todo corazón que quiera dar', no por obligación. Lo sagrado se construye con voluntad, no con presión.",
+    question: "¿Qué estás dando estos días por obligación que te gustaría dar de corazón?"
+  },
+  Tetzaveh: {
+    teaching:
+      "Las vestimentas del Kohen Gadol llevan los nombres de las doce tribus sobre el corazón. Liderar bien es cargar a los demás cerca del pecho.",
+    question: "¿A quién llevás 'cerca del corazón' en tus decisiones?"
+  },
+  "Ki Tisa": {
+    teaching:
+      "Moshe rompe las primeras Tablas, pero Dios le pide que talle unas segundas. Hasta después del error más grande hay lugar para un segundo intento.",
+    question: "¿Qué 'segundas tablas' te gustaría empezar a tallar después de un tropiezo?"
+  },
+  Vayakhel: {
+    teaching:
+      "El pueblo trae tanto material para el Mishkán que Moshe tiene que pedirles que paren de donar. A veces el problema lindo es tener más generosidad de la que hace falta.",
+    question: "¿En qué proyecto compartido podrías sumar tu 'material' esta semana?"
+  },
+  Pekudei: {
+    teaching:
+      "La parashá cierra con una rendición de cuentas exacta de cada material usado para el Mishkán. La transparencia también es parte de lo sagrado.",
+    question: "¿Sos transparente con vos mismo sobre cómo usás tu tiempo y tus recursos?"
+  },
+  Vayikra: {
+    teaching:
+      "La palabra 'Vayikrá' (Y llamó) se escribe con una álef chiquita. Hasta Moshe, el más grande de los profetas, se achica frente al llamado.",
+    question: "¿Qué actitud de humildad te ayudaría a crecer esta semana?"
+  },
+  Tzav: {
+    teaching:
+      "El fuego del altar debe mantenerse encendido 'todo el tiempo, no se apagará'. Lo que más importa pide mantenimiento constante, no solo un buen comienzo.",
+    question: "¿Qué 'fuego' propio necesitás alimentar para que no se apague?"
+  },
+  Shmini: {
+    teaching:
+      "Frente a la tragedia más grande de su vida, Aharón se queda en silencio. A veces la respuesta más honesta no tiene palabras.",
+    question: "¿Le das lugar al silencio cuando no hay nada bueno para decir?"
+  },
+  Tazria: {
+    teaching:
+      "La Torá dedica toda una parashá a hablar de piel y de pureza. Nos recuerda que el cuerpo también es territorio espiritual.",
+    question: "¿Cómo estás cuidando tu cuerpo esta semana, no solo tu mente?"
+  },
+  Metzora: {
+    teaching:
+      "El proceso de sanación del metzorá es lento, con etapas y tiempos de espera. No todo lo roto se arregla de un día para el otro.",
+    question: "¿Le estás dando tiempo suficiente a algo que necesita sanar despacio?"
+  },
+  "Achrei Mot": {
+    teaching:
+      "El servicio más sagrado del año se hace justo después de la muerte de los hijos de Aharón. Hasta en el peor dolor, la vida sigue pidiendo lugar.",
+    question: "¿Cómo seguís adelante con lo importante incluso en medio de un dolor?"
+  },
+  Kedoshim: {
+    teaching:
+      "'Amarás a tu prójimo como a vos mismo' aparece acá, en el corazón mismo de la Torá. La santidad, al final, se mide en cómo tratamos al de al lado.",
+    question: "¿Cómo tratarías a la persona que tenés más cerca si la vieras como a vos mismo?"
+  },
+  Emor: {
+    teaching:
+      "Esta parashá repasa todas las festividades del año, de Shabat a Sucot. El tiempo sagrado necesita ser planeado, no solo esperado.",
+    question: "¿Qué momento especial de esta semana estás dejando pasar sin planificarlo?"
+  },
+  Behar: {
+    teaching:
+      "Cada cincuenta años la tierra descansa y las deudas se perdonan. Hasta el sistema económico más antiguo entendía que todos necesitamos un reinicio.",
+    question: "¿Qué 'deuda' emocional te vendría bien perdonar o soltar?"
+  },
+  Bechukotai: {
+    teaching:
+      "Entre las bendiciones prometidas está 'caminaré entre ustedes'. Lo mejor no es solo prosperidad: es sentir una presencia acompañando tu día a día.",
+    question: "¿Dónde sentís esa presencia acompañándote esta semana?"
+  },
+  Bamidbar: {
+    teaching:
+      "Dios cuenta a cada persona por su nombre antes de que el pueblo cruce el desierto. Todos cuentan, literalmente, antes de emprender un viaje grande.",
+    question: "¿Te sentís contado/a y visto/a en los grupos de los que formás parte?"
+  },
+  Nasso: {
+    teaching:
+      "La Birkat Kohanim, la bendición sacerdotal, todavía se usa hoy, miles de años después. Algunas palabras de bien nunca caducan.",
+    question: "¿A quién le podrías decir una palabra de bendición hoy mismo?"
+  },
+  "Beha'alotcha": {
+    teaching:
+      "El pueblo se queja de la comida aun teniendo el maná, un milagro diario. La costumbre a veces nos hace olvidar lo milagroso de lo cotidiano.",
+    question: "¿Qué cosa 'de todos los días' en tu vida merece que la vuelvas a mirar como un milagro?"
+  },
+  "Sh'lach": {
+    teaching:
+      "De doce exploradores, solo dos ven la tierra prometida con esperanza. La mayoría no siempre tiene razón, y a veces la fe es animarse a ser la minoría.",
+    question: "¿Hay alguna esperanza tuya que sostenés aunque la mayoría no la comparta?"
+  },
+  Korach: {
+    teaching:
+      "Koraj cuestiona el liderazgo de Moshe diciendo 'todo el pueblo es santo'. Tenía un punto válido, pero lo usó para dividir en vez de construir.",
+    question: "¿Estás usando tus buenas ideas para sumar o para competir?"
+  },
+  Chukat: {
+    teaching:
+      "Moshe golpea la roca en vez de hablarle como se le había pedido, y eso le cuesta caro. Hasta el líder más paciente puede perder la calma en un mal día.",
+    question: "¿En qué momento reciente reaccionaste con más fuerza de la necesaria?"
+  },
+  Balak: {
+    teaching:
+      "Un profeta contratado para maldecir termina bendiciendo al pueblo sin poder evitarlo. A veces la verdad se impone aunque no sea la que buscábamos decir.",
+    question: "¿Hay algo bueno que te cuesta admitir en voz alta?"
+  },
+  Pinchas: {
+    teaching:
+      "Las hijas de Tzlofjad reclaman su derecho a heredar tierra y la Torá les da la razón, cambiando la ley. Pedir lo justo, con buenos argumentos, puede transformar el sistema.",
+    question: "¿Qué reclamo justo estás postergando por miedo a pedir?"
+  },
+  Matot: {
+    teaching:
+      "La Torá le da un peso enorme a la palabra dada: 'no profanará su palabra'. Lo que decimos nos compromete tanto como lo que hacemos.",
+    question: "¿Estás cumpliendo las palabras que diste últimamente?"
+  },
+  Masei: {
+    teaching:
+      "La Torá enumera los cuarenta y dos lugares donde acampó el pueblo en el desierto. Hasta los pasos intermedios de un viaje merecen ser recordados, no solo el destino final.",
+    question: "¿Qué 'parada' de tu propio camino merece más reconocimiento del que le diste?"
+  },
+  Devarim: {
+    teaching:
+      "Moshe empieza a repasar toda la historia del pueblo justo antes de morir. A veces el mejor regalo que le podemos dejar a otros es contarles la historia completa, con errores incluidos.",
+    question: "¿Qué historia tuya, con tropiezos y todo, valdría la pena compartir?"
+  },
+  Vaetchanan: {
+    teaching:
+      "Moshe le ruega a Dios entrar a la tierra prometida y la respuesta es 'basta, no me hables más de este tema'. Hasta los pedidos más sinceros a veces reciben un no.",
+    question: "¿Cómo seguís adelante cuando un pedido importante recibe un no?"
+  },
+  Eikev: {
+    teaching:
+      "'No solo de pan vive el hombre' aparece acá. El sustento real necesita algo más que lo material.",
+    question: "¿Qué estás alimentando esta semana además de lo material?"
+  },
+  "Re'eh": {
+    teaching:
+      "Moshe pone frente al pueblo una bendición y una maldición, y los deja elegir. La libertad real siempre incluye la posibilidad de elegir mal.",
+    question: "¿Qué elección tenés adelante ahora que depende solo de vos?"
+  },
+  Shoftim: {
+    teaching:
+      "'Justicia, justicia perseguirás' repite la palabra dos veces. A veces hasta lo correcto hay que buscarlo con insistencia doble.",
+    question: "¿Qué causa justa merece que insistas un poco más?"
+  },
+  "Ki Teitzei": {
+    teaching:
+      "En medio de leyes de guerra aparece la mitzvá de devolver un objeto perdido a su dueño. Hasta en los contextos más duros hay lugar para el cuidado del detalle humano.",
+    question: "¿Qué gesto chiquito de cuidado podrías tener con alguien esta semana?"
+  },
+  "Ki Tavo": {
+    teaching:
+      "El agricultor lleva sus primeros frutos y cuenta en voz alta toda la historia de su pueblo antes de agradecer. La gratitud real recuerda de dónde viene.",
+    question: "¿Por qué (o por quién) estás agradecido/a hoy, y se lo dijiste?"
+  },
+  Nitzavim: {
+    teaching:
+      "'Ustedes están todos parados hoy', dice el texto, incluyendo a líderes y aguateros en el mismo pacto. Nadie queda afuera de la posibilidad de un nuevo comienzo.",
+    question: "¿Dónde estás 'parado' hoy vos, listo para un nuevo comienzo?"
+  },
+  Vayeilech: {
+    teaching:
+      "Con ciento veinte años, Moshe dice 'ya no puedo salir ni entrar' y aun así sigue enseñando hasta el último día. Hay valor en seguir dando lo que se pueda, incluso con las fuerzas que quedan.",
+    question: "¿Qué podés seguir dando incluso en un momento de cansancio o límite?"
+  },
+  "Ha'azinu": {
+    teaching:
+      "Moshe elige despedirse con una canción, no con un sermón. A veces lo que más se recuerda no es lo que se explica, sino lo que se canta o se vive.",
+    question:
+      "¿Qué 'canción' (gesto, historia, costumbre) te gustaría dejarle a los que vengan después?"
+  },
+  "Vezot Haberakhah": {
+    teaching:
+      "La Torá termina con la muerte de Moshe fuera de la tierra prometida, sin haber llegado él mismo. A veces el mayor logro es abrir camino para otros, aunque no lleguemos a verlo completo.",
+    question:
+      "¿En qué estás sembrando algo que quizás disfruten más los que vengan después que vos mismo/a?"
+  }
+};
+
+function combine(a: ParashaEntry, b: ParashaEntry): ParashaEntry {
+  return {
+    teaching: `${a.teaching} ${b.teaching}`,
+    question: `${a.question} ${b.question}`
+  };
+}
+
+const COMBOS: [string, string][] = [
+  ["Vayakhel", "Pekudei"],
+  ["Tazria", "Metzora"],
+  ["Achrei Mot", "Kedoshim"],
+  ["Behar", "Bechukotai"],
+  ["Chukat", "Balak"],
+  ["Matot", "Masei"],
+  ["Nitzavim", "Vayeilech"]
+];
+
+const PARASHOT: Record<string, ParashaEntry> = Object.fromEntries([
+  ...Object.entries(BASE).map(([name, entry]) => [normalizeKey(name), entry] as const),
+  ...COMBOS.map(([a, b]) => [normalizeKey(`${a} ${b}`), combine(BASE[a], BASE[b])] as const)
+]);
+
+const GENERIC: ParashaEntry = {
+  teaching:
+    "Esta semana el calendario judío trae una lectura especial, más allá del ciclo habitual de parashiot. Es un buen momento para hacer una pausa igual y prestar atención a lo que trae esta semana en particular.",
+  question: "¿Qué querés llevarte de esta semana en especial?"
+};
+
+export type ParashaContent = {
+  displayName: string;
+  teaching: string;
+  question: string;
+};
+
+export function getParashaContent(rawTitle?: string): ParashaContent | null {
+  if (!rawTitle) return null;
+  const displayName = rawTitle
+    .replace(/^parashat\s+/i, "")
+    .replace(/-/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (!displayName) return null;
+
+  const entry = PARASHOT[normalizeKey(displayName)] ?? GENERIC;
+
+  return {
+    displayName,
+    teaching: entry.teaching,
+    question: entry.question
+  };
+}

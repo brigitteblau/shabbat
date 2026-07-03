@@ -51,6 +51,7 @@ const cityOptions = CITIES.map((c) => ({
   <script>
     import { getCityById } from "../lib/cities";
     import { fetchShabbatTimes } from "../lib/hebcal";
+    import { getParashaContent } from "../lib/parashot";
 
     const citySelect = document.getElementById("citySelect");
     const dateLabel = document.getElementById("dateLabel");
@@ -62,6 +63,9 @@ const cityOptions = CITIES.map((c) => ({
     const coordsLabel = document.getElementById("coordsLabel");
     const parashaWrap = document.getElementById("parashaWrap");
     const parashaLabel = document.getElementById("parashaLabel");
+    const propuestaParashaName = document.getElementById("propuestaParashaName");
+    const propuestaTeaching = document.getElementById("propuestaTeaching");
+    const propuestaQuestion = document.getElementById("propuestaQuestion");
 
     function setStatus(text) {
       if (statusLabel) statusLabel.textContent = text;
@@ -82,6 +86,21 @@ const cityOptions = CITIES.map((c) => ({
       if (parashaWrap) parashaWrap.classList.toggle("hidden", !title);
     }
 
+    function setPropuesta(parashaTitle) {
+      const content = getParashaContent(parashaTitle);
+      if (propuestaParashaName) {
+        propuestaParashaName.textContent = content ? content.displayName : "—";
+      }
+      if (propuestaTeaching) {
+        propuestaTeaching.textContent = content
+          ? content.teaching
+          : "Todavía no llegó la parashá de esta semana. Volvé a intentar en unos segundos.";
+      }
+      if (propuestaQuestion) {
+        propuestaQuestion.textContent = content ? content.question : "—";
+      }
+    }
+
     function setValues({
       locationLabel: loc,
       isoDate,
@@ -94,6 +113,7 @@ const cityOptions = CITIES.map((c) => ({
       if (startsLabel) startsLabel.textContent = startsAtLabel;
       if (endsLabel) endsLabel.textContent = endsAtLabel;
       setParasha(parashaTitle);
+      setPropuesta(parashaTitle);
     }
 
     async function load(cityId) {
